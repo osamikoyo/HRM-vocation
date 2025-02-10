@@ -6,6 +6,7 @@ type Config struct{
 	Port string `mapstructure:"PORT"`
 	Host string `mapstructure:"HOST"`
 	DSN string `mapstructure:"DSN"`
+    RabbitMqURl string `mapstructure:"RABBITMQ_URL"`
 }
 
 func LoadConfig() (c Config, err error) {
