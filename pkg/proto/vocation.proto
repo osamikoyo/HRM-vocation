@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package vocation;
+
+message Vocation{
+    uint64 VocID = 4;
+    uint64 UserID = 1;
+    string StartTime = 2;
+    string EndTime = 3;
+}
+
+service VocationService{
+    rpc Add (AddVocationRequest) returns (Response);
+}
+
+message AddVocationRequest{
+    Vocation vocation = 1;
+}
+
+message Response{
+    string Error = 1;
+    int64 Status = 2;
+}
+
+message DeleteVocationRequest{
+
+}
