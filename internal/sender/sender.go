@@ -1,6 +1,11 @@
 package sender
 
 import (
+	"context"
+	"time"
+
+	"github.com/bytedance/sonic"
+	"github.com/osamikoyo/hrm-vocation/internal/data/models"
 	"github.com/osamikoyo/hrm-vocation/pkg/config"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -38,4 +43,28 @@ func Init(cfg *config.Config) (*Sender, error) {
 	}, err
 }
 
-func (s *Sender) Send()
+func (s *Sender) Send(message models.Msg) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	body, err := sonic.Marshal(message)
+	if err != nil{
+		return err
+	}
+
+	err = s.AmqpChannel.PublishWithContext(ctx,
+  		"",     // exchange
+  		s.AmqpQue.Name, // routing key
+  		false,  // mandatory
+  		false,  // immediate
+  		amqp.Publishing {
+    		ContentType: "application/json",
+    		Body:        []byte(body),
+  	})
+
+	if err != nil{
+		return err
+	}
+
+	return nil
+}
