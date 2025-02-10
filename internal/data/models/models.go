@@ -9,6 +9,7 @@ import (
 const TIME_TAMPLATE = "2006.01.02"
 
 type Vocation struct{
+	VocId uint64 `gorm:"primaryKey;autoIncrement"`
 	UserID uint64
 	DateStart time.Time
 	DateEnd time.Time
@@ -25,6 +26,9 @@ func ToModels(voc *pb.Vocation) (*Vocation, error) {
 	}
 
 	return &Vocation{
-
+		DateStart: startTime,
+		DateEnd: endTime,
+		UserID: voc.UserID,
+		VocId: voc.VocID,
 	}, nil
 }
