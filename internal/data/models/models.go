@@ -32,3 +32,12 @@ func ToModels(voc *pb.Vocation) (*Vocation, error) {
 		VocId: voc.VocID,
 	}, nil
 }
+
+func ToPB(voc *Vocation) *pb.Vocation {
+	return &pb.Vocation{
+		StartTime: voc.DateStart.Format(TIME_TAMPLATE),
+		EndTime: voc.DateStart.Format(TIME_TAMPLATE),
+		UserID: voc.UserID,
+		VocID: voc.VocId,
+	}
+}
