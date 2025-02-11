@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	VocationService_Add_FullMethodName    = "/vocation.VocationService/Add"
 	VocationService_Delete_FullMethodName = "/vocation.VocationService/Delete"
+	VocationService_Get_FullMethodName    = "/vocation.VocationService/Get"
 )
 
 // VocationServiceClient is the client API for VocationService service.
@@ -29,6 +30,7 @@ const (
 type VocationServiceClient interface {
 	Add(ctx context.Context, in *AddVocationRequest, opts ...grpc.CallOption) (*Response, error)
 	Delete(ctx context.Context, in *DeleteVocationRequest, opts ...grpc.CallOption) (*Response, error)
+	Get(ctx context.Context, in *GetVocationRequest, opts ...grpc.CallOption) (*GetVocationResponse, error)
 }
 
 type vocationServiceClient struct {
@@ -59,12 +61,23 @@ func (c *vocationServiceClient) Delete(ctx context.Context, in *DeleteVocationRe
 	return out, nil
 }
 
+func (c *vocationServiceClient) Get(ctx context.Context, in *GetVocationRequest, opts ...grpc.CallOption) (*GetVocationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetVocationResponse)
+	err := c.cc.Invoke(ctx, VocationService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VocationServiceServer is the server API for VocationService service.
 // All implementations must embed UnimplementedVocationServiceServer
 // for forward compatibility.
 type VocationServiceServer interface {
 	Add(context.Context, *AddVocationRequest) (*Response, error)
 	Delete(context.Context, *DeleteVocationRequest) (*Response, error)
+	Get(context.Context, *GetVocationRequest) (*GetVocationResponse, error)
 	mustEmbedUnimplementedVocationServiceServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedVocationServiceServer) Add(context.Context, *AddVocationReque
 }
 func (UnimplementedVocationServiceServer) Delete(context.Context, *DeleteVocationRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedVocationServiceServer) Get(context.Context, *GetVocationRequest) (*GetVocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
 func (UnimplementedVocationServiceServer) mustEmbedUnimplementedVocationServiceServer() {}
 func (UnimplementedVocationServiceServer) testEmbeddedByValue()                         {}
@@ -138,6 +154,24 @@ func _VocationService_Delete_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VocationService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VocationServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VocationService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VocationServiceServer).Get(ctx, req.(*GetVocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VocationService_ServiceDesc is the grpc.ServiceDesc for VocationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var VocationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _VocationService_Delete_Handler,
+		},
+		{
+			MethodName: "Get",
+			Handler:    _VocationService_Get_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

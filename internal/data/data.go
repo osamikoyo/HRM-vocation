@@ -16,6 +16,13 @@ func New(cfg *config.Config) (*Data, error) {
 	return &Data{db : db}, err
 }
 
+func (d *Data) GetAll() ([]models.Vocation, error) {
+	var vocs []models.Vocation
+
+	result := d.db.Find(&vocs)
+	return vocs, result.Error
+}
+
 func (d *Data) Add(voc *models.Vocation) error {
 	return d.db.Create(voc).Error
 }

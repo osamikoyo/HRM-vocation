@@ -7,6 +7,7 @@ option go_package = "./pkg/proto/pb";
 message Vocation{
     uint64 VocID = 4;
     uint64 UserID = 1;
+    string Email = 5;
     string StartTime = 2;
     string EndTime = 3;
 }
