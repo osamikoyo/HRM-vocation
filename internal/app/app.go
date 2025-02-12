@@ -40,10 +40,12 @@ func (a *App) Run() error {
 
 	pb.RegisterVocationServiceServer(a.grpc, &server.Server{})
 
-	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d", a.Config.Host, a.Config.Port))
+	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%s", a.Config.Host, a.Config.Port))
 	if err != nil{
 		return err
 	}
 
-	return 
+	a.Logger.Info().Str("addr", lis.Addr().String()).Msg("gRPC server started!")
+
+	return a.grpc.Serve(lis)
 }
