@@ -34,5 +34,6 @@ message GetVocationRequest{
 }
 
 message GetVocationResponse{
+    Response response = 2;
     Vocation vocation = 1;
 }

@@ -282,6 +282,7 @@ func (x *GetVocationRequest) GetUserID() uint64 {
 
 type GetVocationResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Response      *Response              `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
 	Vocation      *Vocation              `protobuf:"bytes,1,opt,name=vocation,proto3" json:"vocation,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -315,6 +316,13 @@ func (x *GetVocationResponse) ProtoReflect() protoreflect.Message {
 // Deprecated: Use GetVocationResponse.ProtoReflect.Descriptor instead.
 func (*GetVocationResponse) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_vocation_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetVocationResponse) GetResponse() *Response {
+	if x != nil {
+		return x.Response
+	}
+	return nil
 }
 
 func (x *GetVocationResponse) GetVocation() *Vocation {
@@ -351,8 +359,11 @@ var file_pkg_proto_vocation_proto_rawDesc = []byte{
 	0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x2c,
 	0x0a, 0x12, 0x47, 0x65, 0x74, 0x56, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x44, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x44, 0x22, 0x45, 0x0a, 0x13,
+	0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x44, 0x22, 0x75, 0x0a, 0x13,
 	0x47, 0x65, 0x74, 0x56, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x2e, 0x0a, 0x08, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x76, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x52, 0x08, 0x72, 0x65, 0x73, 0x70, 0x6f,
 	0x6e, 0x73, 0x65, 0x12, 0x2e, 0x0a, 0x08, 0x76, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x76, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e,
 	0x2e, 0x56, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x08, 0x76, 0x6f, 0x63, 0x61, 0x74,
@@ -396,18 +407,19 @@ var file_pkg_proto_vocation_proto_goTypes = []any{
 }
 var file_pkg_proto_vocation_proto_depIdxs = []int32{
 	0, // 0: vocation.AddVocationRequest.vocation:type_name -> vocation.Vocation
-	0, // 1: vocation.GetVocationResponse.vocation:type_name -> vocation.Vocation
-	2, // 2: vocation.VocationService.Add:input_type -> vocation.AddVocationRequest
-	1, // 3: vocation.VocationService.Delete:input_type -> vocation.DeleteVocationRequest
-	4, // 4: vocation.VocationService.Get:input_type -> vocation.GetVocationRequest
-	3, // 5: vocation.VocationService.Add:output_type -> vocation.Response
-	3, // 6: vocation.VocationService.Delete:output_type -> vocation.Response
-	5, // 7: vocation.VocationService.Get:output_type -> vocation.GetVocationResponse
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	3, // 1: vocation.GetVocationResponse.response:type_name -> vocation.Response
+	0, // 2: vocation.GetVocationResponse.vocation:type_name -> vocation.Vocation
+	2, // 3: vocation.VocationService.Add:input_type -> vocation.AddVocationRequest
+	1, // 4: vocation.VocationService.Delete:input_type -> vocation.DeleteVocationRequest
+	4, // 5: vocation.VocationService.Get:input_type -> vocation.GetVocationRequest
+	3, // 6: vocation.VocationService.Add:output_type -> vocation.Response
+	3, // 7: vocation.VocationService.Delete:output_type -> vocation.Response
+	5, // 8: vocation.VocationService.Get:output_type -> vocation.GetVocationResponse
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_pkg_proto_vocation_proto_init() }

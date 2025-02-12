@@ -48,3 +48,24 @@ func (s *Server) Delete(_ context.Context, req *pb.DeleteVocationRequest) (*pb.R
 		Status: http.StatusOK,
 	}, nil
 }
+
+func (s *Server) Client(_ context.Context, req *pb.GetVocationRequest) (*pb.GetVocationResponse, error) {
+	voc, err := s.Storage.Get(req.UserID)
+	if err != nil{
+		return &pb.GetVocationResponse{
+			Vocation: nil,
+			Response: &pb.Response{
+				Error: err.Error(),
+				Status: http.StatusInternalServerError,
+			},
+		}, err
+	}
+
+	return &pb.GetVocationResponse{
+		Response: &pb.Response{
+			Error: "",
+			Status: http.StatusOK,
+		},
+		Vocation: models.ToPB(voc),
+	}, nil
+}
